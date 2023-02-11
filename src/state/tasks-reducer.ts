@@ -1,7 +1,7 @@
-import { TaskType } from '../Todolist';
-import { v1 } from 'uuid';
-import { AddTodolistActionType, RemoveTodolistActionType } from './todolists-reducer';
-import { TasksStateType } from '../App';
+import {v1} from "uuid";
+import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
+import {TasksStateType} from "../App";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/ todolist-api";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -51,7 +51,14 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             const newTask: TaskType = {
                 id: v1(),
                 title: action.title,
-                isDone: false
+                status: TaskStatuses.Completed,
+                deadline: '',
+                description: '',
+                order:3,
+                priority: TaskPriorities.Later,
+                startDate: '',
+                todoListId: '',
+                addedDate: '',
             }
             const tasks = stateCopy[action.todolistId];
             const newTasks = [newTask, ...tasks];
