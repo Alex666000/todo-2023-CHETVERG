@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import axios from "axios";
+import {todolistAPI} from "../api/ todolist-api";
 
 export default {
     title: "API"
@@ -21,7 +22,7 @@ export const GetTodolists = () => {
         // здесь мы будем делать запрос и ответ закидывать в стейт.
         // который в виде строки будем отображать в div-ке
         // смотрим док-цию: базовый url + endpoint
-        axios.get("https://social-network.samuraijs.com/api/1.1/todo-lists")
+        todolistAPI.getTodolists()
             .then((res) => {
                 setState(res.data)
             })
@@ -34,7 +35,7 @@ export const CreateTodolist = () => {
     useEffect(() => {
         const newTitle = "HELLO!!!"
         // для создания чего-либо передаем объект: ключ = значение что создаем и в конце настройки CORS и свой auth ключ
-        axios.post("https://social-network.samuraijs.com/api/1.1/todo-lists", {title: newTitle})
+        todolistAPI.createTodolist(newTitle)
             .then((res) => {
                 setState(res.data)
             })
@@ -45,9 +46,8 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = "5faca6df-4ede-4320-811e-9b35cb4082a8"
-
-        axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`)
+        const todolistId = "bc5a6fa9-376f-4aa1-8cb7-c0a7f66c1a11"
+        todolistAPI.deleteTodolist(todolistId)
             .then((res) => {
                 setState(res.data)
             })
@@ -62,11 +62,127 @@ export const UpdateTodolistTitle = () => {
         const todolistId = "af815ac5-abe2-4989-9d90-b00bb73607f1"
         const newTitle = "Rembo"
 
-        axios.put(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, {title: newTitle})
+        todolistAPI.updateTodolist(todolistId, newTitle)
             .then((res) => {
+
                 setState(res.data)
             })
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
 }
+
+
+//----------------------------------------------------------------------------
+export const GetTasks = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        const todolistId = "0843a9fd-c6a8-454e-a230-cfcf81e7940b"
+
+        todolistAPI.getTasks(todolistId)
+            .then((res) => {
+                setState(res.data)
+            })
+
+    }, [])
+    return <div>{JSON.stringify(state)}</div>
+}
+export const CreateTasks = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        const todolistId = "0843a9fd-c6a8-454e-a230-cfcf81e7940b"
+        const newTitle = "qqqqqqqqqqqq"
+
+        todolistAPI.createTasks(todolistId, newTitle)
+            .then((res) => {
+                setState(res.data)
+            })
+
+    }, [])
+    return <div>{JSON.stringify(state)}</div>
+}
+export const UpdateTasks = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        const todolistId = "0843a9fd-c6a8-454e-a230-cfcf81e7940b"
+        const taskId = "19cf4dec-9c8f-497e-b948-b0e383fc8752"
+
+        todolistAPI.updateTasks(todolistId, taskId)
+            .then((res) => {
+                setState(res.data)
+            })
+
+    }, [])
+    return <div>{JSON.stringify(state)}</div>
+}
+export const DeleteTasks = () => {
+    const [state, setState] = useState<any>(null)
+    const [taskId, setTaskId] = useState(' ')
+    const [todolistId, setTodolistId] = useState(' ')
+
+
+    const deleteTask = () => {
+        const taskId = "3001e926-36a4-4515-a397-7942d4ad6670"
+        const todolistId = "0843a9fd-c6a8-454e-a230-cfcf81e7940b"
+
+        todolistAPI.deleteTask(todolistId, taskId)
+            .then((res) => {
+                setState(res.data)
+            })
+    }
+
+    return <>
+        <input value={taskId} onChange={ (e) => {setTaskId(e.currentTarget.value)} }/>
+        <input value={todolistId} onChange={ (e) => {setTodolistId(e.currentTarget.value)} }/>
+
+        <button onClick={deleteTask}>Delete task</button>
+        <div>{JSON.stringify(state)}</div>
+    </>
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
