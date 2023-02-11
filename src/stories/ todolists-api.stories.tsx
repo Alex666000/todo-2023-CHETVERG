@@ -33,9 +33,9 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const newTitle = "HELLO!!!"
+        const title = "HELLO!!!"
         // для создания чего-либо передаем объект: ключ = значение что создаем и в конце настройки CORS и свой auth ключ
-        todolistAPI.createTodolist(newTitle)
+        todolistAPI.createTodolist(title)
             .then((res) => {
                 setState(res.data)
             })
@@ -62,17 +62,14 @@ export const UpdateTodolistTitle = () => {
         const todolistId = "af815ac5-abe2-4989-9d90-b00bb73607f1"
         const newTitle = "Rembo"
 
-        todolistAPI.updateTodolist(todolistId, newTitle)
+        todolistAPI.updateTodolist({todolistId,newTitle})
             .then((res) => {
-
                 setState(res.data)
             })
     }, [])
 
     return <div>{JSON.stringify(state)}</div>
 }
-
-
 //----------------------------------------------------------------------------
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
@@ -93,7 +90,7 @@ export const CreateTasks = () => {
         const todolistId = "0843a9fd-c6a8-454e-a230-cfcf81e7940b"
         const newTitle = "qqqqqqqqqqqq"
 
-        todolistAPI.createTasks(todolistId, newTitle)
+        todolistAPI.createTasks({todolistId, newTitle})
             .then((res) => {
                 setState(res.data)
             })
